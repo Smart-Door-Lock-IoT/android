@@ -1,0 +1,100 @@
+{
+    "schemes": [],
+    "swagger": "2.0",
+    "info": {
+        "description": "",
+        "title": "API Smart Door Lock IoT",
+        "contact": {},
+        "version": "1.0"
+    },
+    "host": "",
+    "basePath": "",
+    "paths": {
+        "/api/v1/configuration/pin": {
+            "put": {
+                "tags": [
+                    "Configuration"
+                ],
+                "operationId": "ChangePin",
+                "parameters": [
+                    {
+                        "description": "body",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ChangePinRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ChangePinResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Configuration"
+                ],
+                "operationId": "ValidatePin",
+                "parameters": [
+                    {
+                        "description": "body",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ValidatePinRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ValidatePinResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "ChangePinRequest": {
+            "type": "object",
+            "properties": {
+                "new_pin": {
+                    "type": "string"
+                }
+            }
+        },
+        "ChangePinResponse": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "ValidatePinRequest": {
+            "type": "object",
+            "properties": {
+                "pin": {
+                    "type": "string"
+                }
+            }
+        },
+        "ValidatePinResponse": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
