@@ -40,6 +40,9 @@ android {
 
         debug {
             buildConfigField("String", "API_BASE_URL", properties.getProperty("API_BASE_URL"))
+
+            applicationIdSuffix = ".debug"
+            resValue("string", "app_name", "Smart Door Lock Deb")
         }
 
         release {
