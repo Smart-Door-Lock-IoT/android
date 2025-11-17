@@ -2,6 +2,7 @@ package id.my.smartdoorlock.core.di
 
 import id.my.smartdoorlock.BuildConfig
 import id.my.smartdoorlock.openapi.apis.ConfigurationApi
+import id.my.smartdoorlock.openapi.apis.ControlApi
 import io.ktor.client.HttpClientConfig
 import io.ktor.client.plugins.logging.DEFAULT
 import io.ktor.client.plugins.logging.LogLevel
@@ -39,4 +40,5 @@ val serviceModule = module {
 
     // api services
     single { ConfigurationApi(API_BASE_URL, httpClientConfig = get()) }
+    single { ControlApi(API_BASE_URL, httpClientConfig = get()) }
 }

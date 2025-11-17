@@ -61,6 +61,54 @@
                     }
                 }
             }
+        },
+        "/api/v1/control/fingerprint-mode": {
+            "post": {
+                "tags": [
+                    "Control"
+                ],
+                "operationId": "TriggerFingerprintMode",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/TriggerFingerprintModeResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/control/open-door": {
+            "post": {
+                "tags": [
+                    "Control"
+                ],
+                "operationId": "TriggerOpenDoor",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/TriggerOpenDoorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/control/rfid-mode": {
+            "post": {
+                "tags": [
+                    "Control"
+                ],
+                "operationId": "TriggerRFIDMode",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/TriggerRFIDModeResponse"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -73,6 +121,30 @@
             }
         },
         "ChangePinResponse": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "TriggerFingerprintModeResponse": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "TriggerOpenDoorResponse": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "TriggerRFIDModeResponse": {
             "type": "object",
             "properties": {
                 "message": {
