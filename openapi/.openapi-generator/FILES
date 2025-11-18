@@ -5,6 +5,7 @@ docs/ChangePinRequest.md
 docs/ChangePinResponse.md
 docs/ConfigurationApi.md
 docs/ControlApi.md
+docs/TriggerBuzzerAlarmResponse.md
 docs/TriggerFingerprintModeResponse.md
 docs/TriggerOpenDoorResponse.md
 docs/TriggerRFIDModeResponse.md
@@ -29,6 +30,7 @@ src/main/kotlin/id/my/smartdoorlock/openapi/infrastructure/RequestConfig.kt
 src/main/kotlin/id/my/smartdoorlock/openapi/infrastructure/RequestMethod.kt
 src/main/kotlin/id/my/smartdoorlock/openapi/models/ChangePinRequest.kt
 src/main/kotlin/id/my/smartdoorlock/openapi/models/ChangePinResponse.kt
+src/main/kotlin/id/my/smartdoorlock/openapi/models/TriggerBuzzerAlarmResponse.kt
 src/main/kotlin/id/my/smartdoorlock/openapi/models/TriggerFingerprintModeResponse.kt
 src/main/kotlin/id/my/smartdoorlock/openapi/models/TriggerOpenDoorResponse.kt
 src/main/kotlin/id/my/smartdoorlock/openapi/models/TriggerRFIDModeResponse.kt

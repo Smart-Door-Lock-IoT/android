@@ -15,6 +15,7 @@
 
 package id.my.smartdoorlock.openapi.apis
 
+import id.my.smartdoorlock.openapi.models.TriggerBuzzerAlarmResponse
 import id.my.smartdoorlock.openapi.models.TriggerFingerprintModeResponse
 import id.my.smartdoorlock.openapi.models.TriggerOpenDoorResponse
 import id.my.smartdoorlock.openapi.models.TriggerRFIDModeResponse
@@ -39,6 +40,39 @@ import java.text.DateFormat
         httpClientConfig,
         jsonBlock,
     ) {
+
+        /**
+        * POST /api/v1/control/buzzer-alarm
+        * 
+        * 
+         * @return TriggerBuzzerAlarmResponse
+        */
+            @Suppress("UNCHECKED_CAST")
+        open suspend fun triggerBuzzerAlarm(): HttpResponse<TriggerBuzzerAlarmResponse> {
+
+            val localVariableAuthNames = listOf<String>()
+
+            val localVariableBody = 
+                    io.ktor.client.utils.EmptyContent
+
+            val localVariableQuery = mutableMapOf<String, List<String>>()
+
+            val localVariableHeaders = mutableMapOf<String, String>()
+
+            val localVariableConfig = RequestConfig<kotlin.Any?>(
+            RequestMethod.POST,
+            "/api/v1/control/buzzer-alarm",
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            requiresAuthentication = false,
+            )
+
+            return request(
+            localVariableConfig,
+            localVariableBody,
+            localVariableAuthNames
+            ).wrap()
+            }
 
         /**
         * POST /api/v1/control/fingerprint-mode

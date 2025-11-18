@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import id.my.smartdoorlock.core.UiState
 import id.my.smartdoorlock.core.extensions.toFailure
 import id.my.smartdoorlock.openapi.apis.ControlApi
+import id.my.smartdoorlock.openapi.models.TriggerBuzzerAlarmResponse
 import id.my.smartdoorlock.openapi.models.TriggerFingerprintModeResponse
 import id.my.smartdoorlock.openapi.models.TriggerOpenDoorResponse
 import id.my.smartdoorlock.openapi.models.TriggerRFIDModeResponse
@@ -38,6 +39,28 @@ class HomeViewModel(
         } finally {
             delay(100)
             triggerOpenDoorState = UiState.Initial
+        }
+    }
+
+    var triggerBuzzerAlarmState by mutableStateOf<UiState<TriggerBuzzerAlarmResponse>>(UiState.Initial)
+        private set
+
+    fun triggerBuzzerAlarm() = viewModelScope.launch {
+        try {
+            triggerBuzzerAlarmState = UiState.Loading
+            val body = controlApi.triggerBuzzerAlarm().body()
+            triggerBuzzerAlarmState = UiState.Success(body)
+        } catch (e: ResponseException) {
+            e.printStackTrace()
+            triggerBuzzerAlarmState = UiState.Failure(
+                message = e.response.bodyAsText().toFailure().message
+            )
+        } catch (e: Exception) {
+            e.printStackTrace()
+            triggerBuzzerAlarmState = UiState.Failure()
+        } finally {
+            delay(100)
+            triggerBuzzerAlarmState = UiState.Initial
         }
     }
 

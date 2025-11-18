@@ -47,6 +47,7 @@ All URIs are relative to *http://localhost*
 | ------------ | ------------- | ------------- | ------------- |
 | *ConfigurationApi* | [**changePin**](docs/ConfigurationApi.md#changepin) | **PUT** /api/v1/configuration/pin |  |
 | *ConfigurationApi* | [**validatePin**](docs/ConfigurationApi.md#validatepin) | **POST** /api/v1/configuration/pin |  |
+| *ControlApi* | [**triggerBuzzerAlarm**](docs/ControlApi.md#triggerbuzzeralarm) | **POST** /api/v1/control/buzzer-alarm |  |
 | *ControlApi* | [**triggerFingerprintMode**](docs/ControlApi.md#triggerfingerprintmode) | **POST** /api/v1/control/fingerprint-mode |  |
 | *ControlApi* | [**triggerOpenDoor**](docs/ControlApi.md#triggeropendoor) | **POST** /api/v1/control/open-door |  |
 | *ControlApi* | [**triggerRFIDMode**](docs/ControlApi.md#triggerrfidmode) | **POST** /api/v1/control/rfid-mode |  |
@@ -57,6 +58,7 @@ All URIs are relative to *http://localhost*
 
  - [id.my.smartdoorlock.openapi.models.ChangePinRequest](docs/ChangePinRequest.md)
  - [id.my.smartdoorlock.openapi.models.ChangePinResponse](docs/ChangePinResponse.md)
+ - [id.my.smartdoorlock.openapi.models.TriggerBuzzerAlarmResponse](docs/TriggerBuzzerAlarmResponse.md)
  - [id.my.smartdoorlock.openapi.models.TriggerFingerprintModeResponse](docs/TriggerFingerprintModeResponse.md)
  - [id.my.smartdoorlock.openapi.models.TriggerOpenDoorResponse](docs/TriggerOpenDoorResponse.md)
  - [id.my.smartdoorlock.openapi.models.TriggerRFIDModeResponse](docs/TriggerRFIDModeResponse.md)

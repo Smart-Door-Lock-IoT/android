@@ -45,6 +45,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import id.my.smartdoorlock.core.LocalNavBackStack
 import id.my.smartdoorlock.core.Routes
+import id.my.smartdoorlock.core.UiState
 import id.my.smartdoorlock.core.isLoading
 import id.my.smartdoorlock.core.isSuccess
 import kotlinx.coroutines.launch
@@ -144,49 +145,72 @@ fun HomeScreen() {
                     modifier = Modifier.padding(horizontal = 16.dp),
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    Button(
-                        modifier = Modifier.weight(1f),
-                        onClick = {
-                            viewModel.triggerOpenDoor()
-                        },
-                        enabled = !viewModel.triggerOpenDoorState.isLoading()
-                    ) {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.spacedBy(
-                                ButtonDefaults.IconSpacing
-                            )
+                    with(viewModel.triggerOpenDoorState) {
+                        Button(
+                            modifier = Modifier.weight(1f),
+                            onClick = {
+                                viewModel.triggerOpenDoor()
+                            },
+                            enabled = !this.isLoading()
                         ) {
-                            Icon(
-                                Icons.Rounded.LockOpen,
-                                contentDescription = null,
-                                modifier = Modifier.size(
-                                    ButtonDefaults.IconSize
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(
+                                    ButtonDefaults.IconSpacing
                                 )
-                            )
-                            Text("Buka kunci")
+                            ) {
+                                when (this) {
+                                    UiState.Loading -> CircularProgressIndicator(
+                                        strokeWidth = 2.dp,
+                                        modifier = Modifier.size(
+                                            ButtonDefaults.IconSize
+                                        )
+                                    )
+
+                                    else -> Icon(
+                                        Icons.Rounded.LockOpen,
+                                        contentDescription = null,
+                                        modifier = Modifier.size(
+                                            ButtonDefaults.IconSize
+                                        )
+                                    )
+                                }
+                                Text("Buka kunci")
+                            }
                         }
                     }
-                    OutlinedButton(
-                        modifier = Modifier.weight(1f),
-                        onClick = {
-                        },
-                        enabled = !viewModel.triggerOpenDoorState.isLoading()
-                    ) {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.spacedBy(
-                                ButtonDefaults.IconSpacing
-                            )
+                    with(viewModel.triggerBuzzerAlarmState) {
+                        OutlinedButton(
+                            modifier = Modifier.weight(1f),
+                            onClick = {
+                                viewModel.triggerBuzzerAlarm()
+                            },
+                            enabled = !this.isLoading()
                         ) {
-                            Icon(
-                                Icons.Rounded.Campaign,
-                                contentDescription = null,
-                                modifier = Modifier.size(
-                                    ButtonDefaults.IconSize
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(
+                                    ButtonDefaults.IconSpacing
                                 )
-                            )
-                            Text("Darurat")
+                            ) {
+                                when (this) {
+                                    UiState.Loading -> CircularProgressIndicator(
+                                        strokeWidth = 2.dp,
+                                        modifier = Modifier.size(
+                                            ButtonDefaults.IconSize
+                                        )
+                                    )
+
+                                    else -> Icon(
+                                        Icons.Rounded.Campaign,
+                                        contentDescription = null,
+                                        modifier = Modifier.size(
+                                            ButtonDefaults.IconSize
+                                        )
+                                    )
+                                }
+                                Text("Darurat")
+                            }
                         }
                     }
                 }
