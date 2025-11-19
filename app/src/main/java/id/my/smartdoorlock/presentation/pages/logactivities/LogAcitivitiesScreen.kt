@@ -14,7 +14,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.CreditCard
-import androidx.compose.material.icons.rounded.DeleteForever
 import androidx.compose.material.icons.rounded.Fingerprint
 import androidx.compose.material.icons.rounded.Refresh
 import androidx.compose.material3.AlertDialog
@@ -107,17 +106,17 @@ fun LogActivitiesScreen() {
                             contentDescription = null
                         )
                     }
-                    IconButton(
-                        onClick = {
-                            isDialogOpen = true
-                        },
-                        enabled = !viewModel.getAllLogsState.isLoading()
-                    ) {
-                        Icon(
-                            Icons.Rounded.DeleteForever,
-                            contentDescription = null
-                        )
-                    }
+//                    IconButton(
+//                        onClick = {
+//                            isDialogOpen = true
+//                        },
+//                        enabled = !viewModel.getAllLogsState.isLoading()
+//                    ) {
+//                        Icon(
+//                            Icons.Rounded.DeleteForever,
+//                            contentDescription = null
+//                        )
+//                    }
                 }
             )
         }
