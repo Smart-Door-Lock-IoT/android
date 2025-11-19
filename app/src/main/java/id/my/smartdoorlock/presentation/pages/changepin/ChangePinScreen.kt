@@ -2,13 +2,16 @@ package id.my.smartdoorlock.presentation.pages.changepin
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.automirrored.rounded.KeyboardReturn
+import androidx.compose.material.icons.rounded.Circle
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -20,13 +23,16 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import id.my.smartdoorlock.core.LocalNavBackStack
+import id.my.smartdoorlock.core.isSuccess
 import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -36,6 +42,14 @@ fun ChangePinScreen() {
 
     val backStack = LocalNavBackStack.current
     var pin by remember { mutableStateOf("") }
+
+    LaunchedEffect(viewModel.changePinState) {
+        with(viewModel.changePinState) {
+            if (this.isSuccess()) {
+                backStack.removeLastOrNull()
+            }
+        }
+    }
 
     Scaffold(
         topBar = {
@@ -59,7 +73,20 @@ fun ChangePinScreen() {
         }
     ) {
         Column(modifier = Modifier.padding(it)) {
-            Text(pin)
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 16.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
+            ) {
+                pin.forEach { item ->
+                    Icon(
+                        Icons.Rounded.Circle,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.primary
+                    )
+                }
+            }
             LazyVerticalGrid(
                 columns = GridCells.Fixed(3),
                 modifier = Modifier.padding(32.dp),

@@ -2,12 +2,17 @@ package id.my.smartdoorlock.presentation.pages.pin
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.KeyboardReturn
+import androidx.compose.material.icons.rounded.Circle
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
@@ -24,6 +29,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import id.my.smartdoorlock.core.LocalNavBackStack
@@ -65,8 +71,27 @@ fun PinScreen() {
             )
         }
     ) {
-        Column(modifier = Modifier.padding(it)) {
-            Text(pin)
+        Column(
+            modifier = Modifier
+                .padding(it)
+                .fillMaxSize(),
+            verticalArrangement = Arrangement.Center
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(48.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
+            ) {
+                pin.forEach { item ->
+                    Icon(
+                        Icons.Rounded.Circle,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.primary
+                    )
+                }
+            }
             LazyVerticalGrid(
                 columns = GridCells.Fixed(3),
                 modifier = Modifier.padding(32.dp),
