@@ -10,8 +10,8 @@ fun String.toFailure(): Failure = try {
     if (this.isNotEmpty())
         Gson().fromJson(this, Failure::class.java)
     else
-        Failure(message = "Terjadi kesalahan tak terduga! empty")
+        Failure(message = "Terjadi kesalahan tak terduga!")
 } catch (e: Exception) {
     e.printStackTrace()
-    Failure(message = "Terjadi kesalahan tak terduga! ${e.message}")
+    Failure(message = "Terjadi kesalahan tak terduga!")
 }

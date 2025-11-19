@@ -48,7 +48,7 @@ android {
         release {
             buildConfigField("String", "API_BASE_URL", properties.getProperty("API_BASE_URL"))
 
-            isMinifyEnabled = true
+            isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
