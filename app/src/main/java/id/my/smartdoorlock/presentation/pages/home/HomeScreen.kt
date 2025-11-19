@@ -86,6 +86,7 @@ fun HomeScreen() {
 
     LaunchedEffect(
         viewModel.triggerOpenDoorState,
+        viewModel.triggerBuzzerAlarmState,
         viewModel.triggerFingerprintModeState,
         viewModel.triggerRFIDModeState
     ) {
@@ -97,10 +98,25 @@ fun HomeScreen() {
             }
         }
 
-        with(viewModel.triggerFingerprintModeState) {
+        with(viewModel.triggerBuzzerAlarmState) {
             if (this.isSuccess()) {
                 scope.launch {
-                    snackbarHostState.showSnackbar("Mode penambahan sidik jari diaktifkan!")
+                    snackbarHostState.showSnackbar("Buzzer alarm berhasil diaktifkan!")
+                }
+            }
+        }
+
+        with(viewModel.triggerFingerprintModeState) {
+            if (this.isSuccess()) {
+                scope.launch { sheetState.hide() }.invokeOnCompletion {
+                    if (!sheetState.isVisible) {
+                        selectedSlotType = SlotType.INITIAL
+                        showBottomSheet = false
+                    }
+
+                    scope.launch {
+                        snackbarHostState.showSnackbar("Mode penambahan sidik jari diaktifkan!")
+                    }
                 }
             }
         }
