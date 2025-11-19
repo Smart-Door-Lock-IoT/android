@@ -9,8 +9,10 @@ import id.my.smartdoorlock.core.UiState
 import id.my.smartdoorlock.core.extensions.toFailure
 import id.my.smartdoorlock.openapi.apis.ControlApi
 import id.my.smartdoorlock.openapi.models.TriggerBuzzerAlarmResponse
+import id.my.smartdoorlock.openapi.models.TriggerFingerprintModeRequest
 import id.my.smartdoorlock.openapi.models.TriggerFingerprintModeResponse
 import id.my.smartdoorlock.openapi.models.TriggerOpenDoorResponse
+import id.my.smartdoorlock.openapi.models.TriggerRFIDModeRequest
 import id.my.smartdoorlock.openapi.models.TriggerRFIDModeResponse
 import io.ktor.client.plugins.ResponseException
 import io.ktor.client.statement.bodyAsText
@@ -69,10 +71,14 @@ class HomeViewModel(
     )
         private set
 
-    fun triggerFingerprintMode() = viewModelScope.launch {
+    fun triggerFingerprintMode(slot: Int) = viewModelScope.launch {
         try {
             triggerFingerprintModeState = UiState.Loading
-            val body = controlApi.triggerFingerprintMode().body()
+            val body = controlApi.triggerFingerprintMode(
+                TriggerFingerprintModeRequest(
+                    slot = slot
+                )
+            ).body()
             triggerFingerprintModeState = UiState.Success(body)
         } catch (e: ResponseException) {
             e.printStackTrace()
@@ -91,10 +97,14 @@ class HomeViewModel(
     var triggerRFIDModeState by mutableStateOf<UiState<TriggerRFIDModeResponse>>(UiState.Initial)
         private set
 
-    fun triggerRFIDMode() = viewModelScope.launch {
+    fun triggerRFIDMode(slot: Int) = viewModelScope.launch {
         try {
             triggerRFIDModeState = UiState.Loading
-            val body = controlApi.triggerRFIDMode().body()
+            val body = controlApi.triggerRFIDMode(
+                TriggerRFIDModeRequest(
+                    slot = slot
+                )
+            ).body()
             triggerRFIDModeState = UiState.Success(body)
         } catch (e: ResponseException) {
             e.printStackTrace()

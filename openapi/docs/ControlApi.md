@@ -4,11 +4,95 @@ All URIs are relative to *http://localhost*
 
 | Method | HTTP request | Description |
 | ------------- | ------------- | ------------- |
+| [**deleteAllLogs**](ControlApi.md#deleteAllLogs) | **DELETE** /api/v1/control/logs |  |
+| [**getAllLogs**](ControlApi.md#getAllLogs) | **GET** /api/v1/control/logs |  |
 | [**triggerBuzzerAlarm**](ControlApi.md#triggerBuzzerAlarm) | **POST** /api/v1/control/buzzer-alarm |  |
 | [**triggerFingerprintMode**](ControlApi.md#triggerFingerprintMode) | **POST** /api/v1/control/fingerprint-mode |  |
 | [**triggerOpenDoor**](ControlApi.md#triggerOpenDoor) | **POST** /api/v1/control/open-door |  |
 | [**triggerRFIDMode**](ControlApi.md#triggerRFIDMode) | **POST** /api/v1/control/rfid-mode |  |
 
+
+<a id="deleteAllLogs"></a>
+# **deleteAllLogs**
+> DeleteAllLogsResponse deleteAllLogs()
+
+
+
+### Example
+```kotlin
+// Import classes:
+//import id.my.smartdoorlock.openapi.infrastructure.*
+//import id.my.smartdoorlock.openapi.models.*
+
+val apiInstance = ControlApi()
+try {
+    val result : DeleteAllLogsResponse = apiInstance.deleteAllLogs()
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling ControlApi#deleteAllLogs")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling ControlApi#deleteAllLogs")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+This endpoint does not need any parameter.
+
+### Return type
+
+[**DeleteAllLogsResponse**](DeleteAllLogsResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a id="getAllLogs"></a>
+# **getAllLogs**
+> GetAllLogsResponse getAllLogs()
+
+
+
+### Example
+```kotlin
+// Import classes:
+//import id.my.smartdoorlock.openapi.infrastructure.*
+//import id.my.smartdoorlock.openapi.models.*
+
+val apiInstance = ControlApi()
+try {
+    val result : GetAllLogsResponse = apiInstance.getAllLogs()
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling ControlApi#getAllLogs")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling ControlApi#getAllLogs")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+This endpoint does not need any parameter.
+
+### Return type
+
+[**GetAllLogsResponse**](GetAllLogsResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
 
 <a id="triggerBuzzerAlarm"></a>
 # **triggerBuzzerAlarm**
@@ -53,7 +137,7 @@ No authorization required
 
 <a id="triggerFingerprintMode"></a>
 # **triggerFingerprintMode**
-> TriggerFingerprintModeResponse triggerFingerprintMode()
+> TriggerFingerprintModeResponse triggerFingerprintMode(body)
 
 
 
@@ -64,8 +148,9 @@ No authorization required
 //import id.my.smartdoorlock.openapi.models.*
 
 val apiInstance = ControlApi()
+val body : TriggerFingerprintModeRequest =  // TriggerFingerprintModeRequest | body
 try {
-    val result : TriggerFingerprintModeResponse = apiInstance.triggerFingerprintMode()
+    val result : TriggerFingerprintModeResponse = apiInstance.triggerFingerprintMode(body)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling ControlApi#triggerFingerprintMode")
@@ -77,7 +162,9 @@ try {
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **body** | [**TriggerFingerprintModeRequest**](TriggerFingerprintModeRequest.md)| body | |
 
 ### Return type
 
@@ -135,7 +222,7 @@ No authorization required
 
 <a id="triggerRFIDMode"></a>
 # **triggerRFIDMode**
-> TriggerRFIDModeResponse triggerRFIDMode()
+> TriggerRFIDModeResponse triggerRFIDMode(body)
 
 
 
@@ -146,8 +233,9 @@ No authorization required
 //import id.my.smartdoorlock.openapi.models.*
 
 val apiInstance = ControlApi()
+val body : TriggerRFIDModeRequest =  // TriggerRFIDModeRequest | body
 try {
-    val result : TriggerRFIDModeResponse = apiInstance.triggerRFIDMode()
+    val result : TriggerRFIDModeResponse = apiInstance.triggerRFIDMode(body)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling ControlApi#triggerRFIDMode")
@@ -159,7 +247,9 @@ try {
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **body** | [**TriggerRFIDModeRequest**](TriggerRFIDModeRequest.md)| body | |
 
 ### Return type
 

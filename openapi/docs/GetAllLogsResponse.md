@@ -1,10 +1,10 @@
 
-# ValidatePinResponse
+# GetAllLogsResponse
 
 ## Properties
 | Name | Type | Description | Notes |
 | ------------ | ------------- | ------------- | ------------- |
-| **message** | **kotlin.String** |  |  |
+| **logs** | [**kotlin.collections.List&lt;DomainsLog&gt;**](DomainsLog.md) |  |  |
 
 
 

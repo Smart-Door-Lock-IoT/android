@@ -27,20 +27,28 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.ListItem
+import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import id.my.smartdoorlock.core.LocalNavBackStack
@@ -51,6 +59,12 @@ import id.my.smartdoorlock.core.isSuccess
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
+private enum class SlotType {
+    INITIAL,
+    FINGERPRINT,
+    RFID
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen() {
@@ -59,6 +73,9 @@ fun HomeScreen() {
     val backStack = LocalNavBackStack.current
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
+    val sheetState = rememberModalBottomSheetState()
+    var selectedSlotType by remember { mutableStateOf(SlotType.INITIAL) }
+    var showBottomSheet by remember { mutableStateOf(false) }
 
     LaunchedEffect(
         viewModel.triggerOpenDoorState,
@@ -83,8 +100,15 @@ fun HomeScreen() {
 
         with(viewModel.triggerRFIDModeState) {
             if (this.isSuccess()) {
-                scope.launch {
-                    snackbarHostState.showSnackbar("Mode penambahan RFID diaktifkan!")
+                scope.launch { sheetState.hide() }.invokeOnCompletion {
+                    if (!sheetState.isVisible) {
+                        selectedSlotType = SlotType.INITIAL
+                        showBottomSheet = false
+                    }
+
+                    scope.launch {
+                        snackbarHostState.showSnackbar("Mode penambahan RFID diaktifkan!")
+                    }
                 }
             }
         }
@@ -161,7 +185,7 @@ fun HomeScreen() {
                             ) {
                                 when (this) {
                                     UiState.Loading -> CircularProgressIndicator(
-                                        strokeWidth = 2.dp,
+                                        strokeWidth = 2.4.dp,
                                         modifier = Modifier.size(
                                             ButtonDefaults.IconSize
                                         )
@@ -195,7 +219,7 @@ fun HomeScreen() {
                             ) {
                                 when (this) {
                                     UiState.Loading -> CircularProgressIndicator(
-                                        strokeWidth = 2.dp,
+                                        strokeWidth = 2.4.dp,
                                         modifier = Modifier.size(
                                             ButtonDefaults.IconSize
                                         )
@@ -226,29 +250,31 @@ fun HomeScreen() {
                         modifier = Modifier.padding(start = 16.dp)
                     )
                     Spacer(modifier = Modifier.size(8.dp))
-                    ListItem(
+                    CustomListItem(
                         title = "Ubah PIN Aplikasi",
                         icon = Icons.Rounded.Pin,
                         onClick = {
                             backStack.add(Routes.ChangePin)
                         }
                     )
-                    ListItem(
+                    CustomListItem(
                         title = "Sidik Jari",
                         subtitle = "Masukkan smart door lock device ke mode penambahan sidik jari",
                         icon = Icons.Rounded.Fingerprint,
                         isLoading = viewModel.triggerFingerprintModeState.isLoading(),
                         onClick = {
-                            viewModel.triggerFingerprintMode()
+                            selectedSlotType = SlotType.FINGERPRINT
+                            showBottomSheet = true
                         }
                     )
-                    ListItem(
+                    CustomListItem(
                         title = "RFID",
                         subtitle = "Masukkan smart door lock ke mode penambahan kartu RFID",
                         icon = Icons.Rounded.CreditCard,
                         isLoading = viewModel.triggerRFIDModeState.isLoading(),
                         onClick = {
-                            viewModel.triggerRFIDMode()
+                            selectedSlotType = SlotType.RFID
+                            showBottomSheet = true
                         }
                     )
                 }
@@ -265,7 +291,7 @@ fun HomeScreen() {
             }
 
             items(5) {
-                ListItem(
+                CustomListItem(
                     title = "Aktivitas ${it + 1}",
                     subtitle = "Detail aktivitas kunci pintu nomor ${it + 1}",
                     icon = Icons.Rounded.LockOpen,
@@ -277,11 +303,74 @@ fun HomeScreen() {
 
             item { Spacer(modifier = Modifier.size(32.dp)) }
         }
+
+        // bottom sheet select slot
+        if (showBottomSheet) {
+            ModalBottomSheet(
+                onDismissRequest = {
+                    if (!viewModel.triggerRFIDModeState.isLoading() ||
+                        !viewModel.triggerFingerprintModeState.isLoading()
+                    ) showBottomSheet = false
+                },
+                sheetState = sheetState
+            ) {
+                Column(modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 16.dp)) {
+                    Text("Pilih Slot", style = MaterialTheme.typography.titleMedium)
+                    Text(
+                        "Silahkan pilih slot yang akan digunakan untuk menyimpan identitas baru.",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onBackground.copy(alpha = .72f)
+                    )
+                }
+                // Sheet content
+                for (slot in 1..3) {
+                    ListItem(
+                        colors = ListItemDefaults.colors(containerColor = Color.Transparent),
+                        headlineContent = {
+                            Text("Slot $slot")
+                        },
+                        trailingContent = {
+                            if (viewModel.triggerFingerprintModeState.isLoading() ||
+                                viewModel.triggerRFIDModeState.isLoading()
+                            )
+                                CircularProgressIndicator(
+                                    modifier = Modifier.size(ButtonDefaults.IconSize),
+                                    strokeWidth = 2.4.dp
+                                )
+                        },
+                        modifier = Modifier.clickable {
+                            when (selectedSlotType) {
+                                SlotType.FINGERPRINT -> viewModel.triggerFingerprintMode(slot)
+                                SlotType.RFID -> viewModel.triggerRFIDMode(slot)
+                                else -> Unit
+                            }
+                        }
+                    )
+                }
+
+                OutlinedButton(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    enabled = !viewModel.triggerFingerprintModeState.isLoading() ||
+                            !viewModel.triggerRFIDModeState.isLoading(),
+                    onClick = {
+                        scope.launch { sheetState.hide() }.invokeOnCompletion {
+                            if (!sheetState.isVisible) {
+                                showBottomSheet = false
+                            }
+                        }
+                    }
+                ) {
+                    Text("Batal")
+                }
+            }
+        }
     }
 }
 
 @Composable
-private fun ListItem(
+private fun CustomListItem(
     title: String,
     subtitle: String = "",
     icon: ImageVector,

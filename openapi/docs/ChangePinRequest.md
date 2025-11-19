@@ -4,7 +4,7 @@
 ## Properties
 | Name | Type | Description | Notes |
 | ------------ | ------------- | ------------- | ------------- |
-| **newPin** | **kotlin.String** |  |  [optional] |
+| **newPin** | **kotlin.String** |  |  |
 
 
 

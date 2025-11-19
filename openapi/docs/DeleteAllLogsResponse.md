@@ -1,5 +1,5 @@
 
-# ValidatePinResponse
+# DeleteAllLogsResponse
 
 ## Properties
 | Name | Type | Description | Notes |

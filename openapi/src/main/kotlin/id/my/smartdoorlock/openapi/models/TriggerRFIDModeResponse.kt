@@ -28,7 +28,7 @@ import com.google.gson.annotations.SerializedName
 data class TriggerRFIDModeResponse (
 
     @SerializedName("message")
-    val message: kotlin.String? = null
+    val message: kotlin.String
 
 ) {
 

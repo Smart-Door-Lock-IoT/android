@@ -28,7 +28,7 @@ import com.google.gson.annotations.SerializedName
 data class ValidatePinRequest (
 
     @SerializedName("pin")
-    val pin: kotlin.String? = null
+    val pin: kotlin.String
 
 ) {
 

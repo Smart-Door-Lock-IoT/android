@@ -47,6 +47,8 @@ All URIs are relative to *http://localhost*
 | ------------ | ------------- | ------------- | ------------- |
 | *ConfigurationApi* | [**changePin**](docs/ConfigurationApi.md#changepin) | **PUT** /api/v1/configuration/pin |  |
 | *ConfigurationApi* | [**validatePin**](docs/ConfigurationApi.md#validatepin) | **POST** /api/v1/configuration/pin |  |
+| *ControlApi* | [**deleteAllLogs**](docs/ControlApi.md#deletealllogs) | **DELETE** /api/v1/control/logs |  |
+| *ControlApi* | [**getAllLogs**](docs/ControlApi.md#getalllogs) | **GET** /api/v1/control/logs |  |
 | *ControlApi* | [**triggerBuzzerAlarm**](docs/ControlApi.md#triggerbuzzeralarm) | **POST** /api/v1/control/buzzer-alarm |  |
 | *ControlApi* | [**triggerFingerprintMode**](docs/ControlApi.md#triggerfingerprintmode) | **POST** /api/v1/control/fingerprint-mode |  |
 | *ControlApi* | [**triggerOpenDoor**](docs/ControlApi.md#triggeropendoor) | **POST** /api/v1/control/open-door |  |
@@ -58,9 +60,14 @@ All URIs are relative to *http://localhost*
 
  - [id.my.smartdoorlock.openapi.models.ChangePinRequest](docs/ChangePinRequest.md)
  - [id.my.smartdoorlock.openapi.models.ChangePinResponse](docs/ChangePinResponse.md)
+ - [id.my.smartdoorlock.openapi.models.DeleteAllLogsResponse](docs/DeleteAllLogsResponse.md)
+ - [id.my.smartdoorlock.openapi.models.DomainsLog](docs/DomainsLog.md)
+ - [id.my.smartdoorlock.openapi.models.GetAllLogsResponse](docs/GetAllLogsResponse.md)
  - [id.my.smartdoorlock.openapi.models.TriggerBuzzerAlarmResponse](docs/TriggerBuzzerAlarmResponse.md)
+ - [id.my.smartdoorlock.openapi.models.TriggerFingerprintModeRequest](docs/TriggerFingerprintModeRequest.md)
  - [id.my.smartdoorlock.openapi.models.TriggerFingerprintModeResponse](docs/TriggerFingerprintModeResponse.md)
  - [id.my.smartdoorlock.openapi.models.TriggerOpenDoorResponse](docs/TriggerOpenDoorResponse.md)
+ - [id.my.smartdoorlock.openapi.models.TriggerRFIDModeRequest](docs/TriggerRFIDModeRequest.md)
  - [id.my.smartdoorlock.openapi.models.TriggerRFIDModeResponse](docs/TriggerRFIDModeResponse.md)
  - [id.my.smartdoorlock.openapi.models.ValidatePinRequest](docs/ValidatePinRequest.md)
  - [id.my.smartdoorlock.openapi.models.ValidatePinResponse](docs/ValidatePinResponse.md)

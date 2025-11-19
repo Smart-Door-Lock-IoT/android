@@ -15,9 +15,13 @@
 
 package id.my.smartdoorlock.openapi.apis
 
+import id.my.smartdoorlock.openapi.models.DeleteAllLogsResponse
+import id.my.smartdoorlock.openapi.models.GetAllLogsResponse
 import id.my.smartdoorlock.openapi.models.TriggerBuzzerAlarmResponse
+import id.my.smartdoorlock.openapi.models.TriggerFingerprintModeRequest
 import id.my.smartdoorlock.openapi.models.TriggerFingerprintModeResponse
 import id.my.smartdoorlock.openapi.models.TriggerOpenDoorResponse
+import id.my.smartdoorlock.openapi.models.TriggerRFIDModeRequest
 import id.my.smartdoorlock.openapi.models.TriggerRFIDModeResponse
 
 import id.my.smartdoorlock.openapi.infrastructure.*
@@ -40,6 +44,72 @@ import java.text.DateFormat
         httpClientConfig,
         jsonBlock,
     ) {
+
+        /**
+        * DELETE /api/v1/control/logs
+        * 
+        * 
+         * @return DeleteAllLogsResponse
+        */
+            @Suppress("UNCHECKED_CAST")
+        open suspend fun deleteAllLogs(): HttpResponse<DeleteAllLogsResponse> {
+
+            val localVariableAuthNames = listOf<String>()
+
+            val localVariableBody = 
+                    io.ktor.client.utils.EmptyContent
+
+            val localVariableQuery = mutableMapOf<String, List<String>>()
+
+            val localVariableHeaders = mutableMapOf<String, String>()
+
+            val localVariableConfig = RequestConfig<kotlin.Any?>(
+            RequestMethod.DELETE,
+            "/api/v1/control/logs",
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            requiresAuthentication = false,
+            )
+
+            return request(
+            localVariableConfig,
+            localVariableBody,
+            localVariableAuthNames
+            ).wrap()
+            }
+
+        /**
+        * GET /api/v1/control/logs
+        * 
+        * 
+         * @return GetAllLogsResponse
+        */
+            @Suppress("UNCHECKED_CAST")
+        open suspend fun getAllLogs(): HttpResponse<GetAllLogsResponse> {
+
+            val localVariableAuthNames = listOf<String>()
+
+            val localVariableBody = 
+                    io.ktor.client.utils.EmptyContent
+
+            val localVariableQuery = mutableMapOf<String, List<String>>()
+
+            val localVariableHeaders = mutableMapOf<String, String>()
+
+            val localVariableConfig = RequestConfig<kotlin.Any?>(
+            RequestMethod.GET,
+            "/api/v1/control/logs",
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            requiresAuthentication = false,
+            )
+
+            return request(
+            localVariableConfig,
+            localVariableBody,
+            localVariableAuthNames
+            ).wrap()
+            }
 
         /**
         * POST /api/v1/control/buzzer-alarm
@@ -78,15 +148,15 @@ import java.text.DateFormat
         * POST /api/v1/control/fingerprint-mode
         * 
         * 
+         * @param body body 
          * @return TriggerFingerprintModeResponse
         */
             @Suppress("UNCHECKED_CAST")
-        open suspend fun triggerFingerprintMode(): HttpResponse<TriggerFingerprintModeResponse> {
+        open suspend fun triggerFingerprintMode(body: TriggerFingerprintModeRequest): HttpResponse<TriggerFingerprintModeResponse> {
 
             val localVariableAuthNames = listOf<String>()
 
-            val localVariableBody = 
-                    io.ktor.client.utils.EmptyContent
+            val localVariableBody = body
 
             val localVariableQuery = mutableMapOf<String, List<String>>()
 
@@ -100,7 +170,7 @@ import java.text.DateFormat
             requiresAuthentication = false,
             )
 
-            return request(
+            return jsonRequest(
             localVariableConfig,
             localVariableBody,
             localVariableAuthNames
@@ -144,15 +214,15 @@ import java.text.DateFormat
         * POST /api/v1/control/rfid-mode
         * 
         * 
+         * @param body body 
          * @return TriggerRFIDModeResponse
         */
             @Suppress("UNCHECKED_CAST")
-        open suspend fun triggerRFIDMode(): HttpResponse<TriggerRFIDModeResponse> {
+        open suspend fun triggerRFIDMode(body: TriggerRFIDModeRequest): HttpResponse<TriggerRFIDModeResponse> {
 
             val localVariableAuthNames = listOf<String>()
 
-            val localVariableBody = 
-                    io.ktor.client.utils.EmptyContent
+            val localVariableBody = body
 
             val localVariableQuery = mutableMapOf<String, List<String>>()
 
@@ -166,7 +236,7 @@ import java.text.DateFormat
             requiresAuthentication = false,
             )
 
-            return request(
+            return jsonRequest(
             localVariableConfig,
             localVariableBody,
             localVariableAuthNames

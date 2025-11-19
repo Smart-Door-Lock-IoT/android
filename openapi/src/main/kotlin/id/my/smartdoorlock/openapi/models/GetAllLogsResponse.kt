@@ -15,20 +15,21 @@
 
 package id.my.smartdoorlock.openapi.models
 
+import id.my.smartdoorlock.openapi.models.DomainsLog
 
 import com.google.gson.annotations.SerializedName
 
 /**
  * 
  *
- * @param newPin 
+ * @param logs 
  */
 
 
-data class ChangePinRequest (
+data class GetAllLogsResponse (
 
-    @SerializedName("new_pin")
-    val newPin: kotlin.String
+    @SerializedName("logs")
+    val logs: kotlin.collections.List<DomainsLog>
 
 ) {
 

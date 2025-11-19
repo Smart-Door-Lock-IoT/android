@@ -21,14 +21,14 @@ import com.google.gson.annotations.SerializedName
 /**
  * 
  *
- * @param newPin 
+ * @param slot 
  */
 
 
-data class ChangePinRequest (
+data class TriggerFingerprintModeRequest (
 
-    @SerializedName("new_pin")
-    val newPin: kotlin.String
+    @SerializedName("slot")
+    val slot: kotlin.Int
 
 ) {
 

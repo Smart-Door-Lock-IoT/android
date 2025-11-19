@@ -21,14 +21,22 @@ import com.google.gson.annotations.SerializedName
 /**
  * 
  *
- * @param newPin 
+ * @param deviceName 
+ * @param id 
+ * @param status 
  */
 
 
-data class ChangePinRequest (
+data class DomainsLog (
 
-    @SerializedName("new_pin")
-    val newPin: kotlin.String
+    @SerializedName("device_name")
+    val deviceName: kotlin.String,
+
+    @SerializedName("id")
+    val id: kotlin.Int,
+
+    @SerializedName("status")
+    val status: kotlin.Boolean
 
 ) {
 
