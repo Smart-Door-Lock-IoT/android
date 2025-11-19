@@ -343,7 +343,9 @@ fun HomeScreen() {
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp, vertical = 8.dp),
-                    onClick = {}
+                    onClick = {
+                        backStack.add(Routes.LogActivities)
+                    }
                 ) {
                     Text("Lihat lainnya")
                 }

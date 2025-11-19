@@ -18,7 +18,7 @@ import id.my.smartdoorlock.ui.theme.SmartDoorLockTheme
 
 @Composable
 fun ComposeApplication() {
-    val backStack = rememberNavBackStack(Routes.Home)
+    val backStack = rememberNavBackStack(Routes.Pin)
 
     SmartDoorLockTheme(darkTheme = false) {
         Surface {
