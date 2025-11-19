@@ -15,32 +15,21 @@
 
 package id.my.smartdoorlock.openapi.models
 
+import id.my.smartdoorlock.openapi.models.DomainsLog
 
 import com.google.gson.annotations.SerializedName
 
 /**
  * 
  *
- * @param createdAt 
- * @param deviceName 
- * @param id 
- * @param status 
+ * @param logs 
  */
 
 
-data class DomainsLog (
+data class GetAllLatestLogsResponse (
 
-    @SerializedName("created_at")
-    val createdAt: kotlin.String,
-
-    @SerializedName("device_name")
-    val deviceName: kotlin.String,
-
-    @SerializedName("id")
-    val id: kotlin.Int,
-
-    @SerializedName("status")
-    val status: kotlin.Boolean
+    @SerializedName("logs")
+    val logs: kotlin.collections.List<DomainsLog>
 
 ) {
 

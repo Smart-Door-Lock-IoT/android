@@ -7,6 +7,7 @@ docs/ConfigurationApi.md
 docs/ControlApi.md
 docs/DeleteAllLogsResponse.md
 docs/DomainsLog.md
+docs/GetAllLatestLogsResponse.md
 docs/GetAllLogsResponse.md
 docs/TriggerBuzzerAlarmResponse.md
 docs/TriggerFingerprintModeRequest.md
@@ -37,6 +38,7 @@ src/main/kotlin/id/my/smartdoorlock/openapi/models/ChangePinRequest.kt
 src/main/kotlin/id/my/smartdoorlock/openapi/models/ChangePinResponse.kt
 src/main/kotlin/id/my/smartdoorlock/openapi/models/DeleteAllLogsResponse.kt
 src/main/kotlin/id/my/smartdoorlock/openapi/models/DomainsLog.kt
+src/main/kotlin/id/my/smartdoorlock/openapi/models/GetAllLatestLogsResponse.kt
 src/main/kotlin/id/my/smartdoorlock/openapi/models/GetAllLogsResponse.kt
 src/main/kotlin/id/my/smartdoorlock/openapi/models/TriggerBuzzerAlarmResponse.kt
 src/main/kotlin/id/my/smartdoorlock/openapi/models/TriggerFingerprintModeRequest.kt

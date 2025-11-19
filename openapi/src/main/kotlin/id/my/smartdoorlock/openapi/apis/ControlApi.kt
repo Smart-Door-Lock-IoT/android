@@ -16,6 +16,7 @@
 package id.my.smartdoorlock.openapi.apis
 
 import id.my.smartdoorlock.openapi.models.DeleteAllLogsResponse
+import id.my.smartdoorlock.openapi.models.GetAllLatestLogsResponse
 import id.my.smartdoorlock.openapi.models.GetAllLogsResponse
 import id.my.smartdoorlock.openapi.models.TriggerBuzzerAlarmResponse
 import id.my.smartdoorlock.openapi.models.TriggerFingerprintModeRequest
@@ -66,6 +67,39 @@ import java.text.DateFormat
             val localVariableConfig = RequestConfig<kotlin.Any?>(
             RequestMethod.DELETE,
             "/api/v1/control/logs",
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            requiresAuthentication = false,
+            )
+
+            return request(
+            localVariableConfig,
+            localVariableBody,
+            localVariableAuthNames
+            ).wrap()
+            }
+
+        /**
+        * GET /api/v1/control/logs/latest
+        * 
+        * 
+         * @return GetAllLatestLogsResponse
+        */
+            @Suppress("UNCHECKED_CAST")
+        open suspend fun getAllLatestLogs(): HttpResponse<GetAllLatestLogsResponse> {
+
+            val localVariableAuthNames = listOf<String>()
+
+            val localVariableBody = 
+                    io.ktor.client.utils.EmptyContent
+
+            val localVariableQuery = mutableMapOf<String, List<String>>()
+
+            val localVariableHeaders = mutableMapOf<String, String>()
+
+            val localVariableConfig = RequestConfig<kotlin.Any?>(
+            RequestMethod.GET,
+            "/api/v1/control/logs/latest",
             query = localVariableQuery,
             headers = localVariableHeaders,
             requiresAuthentication = false,

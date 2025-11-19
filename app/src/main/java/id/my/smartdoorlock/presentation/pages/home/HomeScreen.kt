@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Campaign
@@ -20,6 +21,7 @@ import androidx.compose.material.icons.rounded.Fingerprint
 import androidx.compose.material.icons.rounded.Lock
 import androidx.compose.material.icons.rounded.LockOpen
 import androidx.compose.material.icons.rounded.Pin
+import androidx.compose.material.icons.rounded.Refresh
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -27,6 +29,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
@@ -55,8 +58,10 @@ import androidx.compose.ui.unit.dp
 import id.my.smartdoorlock.core.LocalNavBackStack
 import id.my.smartdoorlock.core.Routes
 import id.my.smartdoorlock.core.UiState
+import id.my.smartdoorlock.core.extensions.formatDateTime
 import id.my.smartdoorlock.core.isLoading
 import id.my.smartdoorlock.core.isSuccess
+import id.my.smartdoorlock.openapi.models.DomainsLog
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
@@ -285,25 +290,66 @@ fun HomeScreen() {
             item { Spacer(modifier = Modifier.size(16.dp)) }
 
             item {
-                Text(
-                    "Riwayat Aktivitas",
-                    style = MaterialTheme.typography.titleMedium,
-                    modifier = Modifier.padding(start = 16.dp, bottom = 8.dp)
-                )
-            }
-
-            items(5) {
-                CustomListItem(
-                    title = "Aktivitas ${it + 1}",
-                    subtitle = "Detail aktivitas kunci pintu nomor ${it + 1}",
-                    icon = Icons.Rounded.LockOpen,
-                    onClick = {
-                        backStack.add(Routes.LogActivities)
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 16.dp, end = 16.dp)
+                ) {
+                    Text(
+                        "Riwayat Aktivitas",
+                        style = MaterialTheme.typography.titleMedium,
+                    )
+                    IconButton(
+                        onClick = {
+                            viewModel.getAllLatestLogs()
+                        },
+                        enabled = !viewModel.getAllLatestLogsState.isLoading()
+                    ) {
+                        Icon(
+                            Icons.Rounded.Refresh,
+                            contentDescription = null
+                        )
                     }
-                )
+                }
             }
 
-            item { Spacer(modifier = Modifier.size(32.dp)) }
+            with(viewModel.getAllLatestLogsState) {
+                when (this) {
+                    UiState.Loading -> item {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp)
+                        ) {
+                            CircularProgressIndicator(
+                                modifier = Modifier.align(Alignment.Center)
+                            )
+                        }
+                    }
+
+                    is UiState.Success -> items(data.logs) {
+                        CustomListItemLog(data = it)
+                    }
+
+                    else -> Unit
+                }
+            }
+
+
+            item {
+                OutlinedButton(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 8.dp),
+                    onClick = {}
+                ) {
+                    Text("Lihat lainnya")
+                }
+            }
+
+            item { Spacer(modifier = Modifier.size(24.dp)) }
         }
 
         // bottom sheet select slot
@@ -369,6 +415,68 @@ fun HomeScreen() {
                     Text("Batal")
                 }
             }
+        }
+    }
+}
+
+@Composable
+private fun CustomListItemLog(data: DomainsLog) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp, vertical = 12.dp),
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Box(
+            modifier = Modifier
+                .size(32.dp)
+                .clip(CircleShape)
+                .background(
+                    when (data.status) {
+                        true -> MaterialTheme.colorScheme.primaryContainer
+                        else -> MaterialTheme.colorScheme.errorContainer
+                    }
+                )
+        ) {
+            when (data.deviceName == "Fingerprint") {
+                true -> Icon(
+                    Icons.Rounded.Fingerprint,
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(ButtonDefaults.IconSize)
+                        .align(Alignment.Center),
+                    tint = when (data.status) {
+                        true -> MaterialTheme.colorScheme.primary
+                        else -> MaterialTheme.colorScheme.error
+                    }
+                )
+
+                else -> Icon(
+                    Icons.Rounded.CreditCard,
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(ButtonDefaults.IconSize)
+                        .align(Alignment.Center),
+                    tint = when (data.status) {
+                        true -> MaterialTheme.colorScheme.primary
+                        else -> MaterialTheme.colorScheme.error
+                    }
+                )
+            }
+        }
+        Column {
+            Text(data.deviceName, style = MaterialTheme.typography.titleSmall)
+            Text(
+                "${
+                    when (data.status) {
+                        true -> "Berhasil membuka kunci pintu"
+                        else -> "Gagal membuka kunci pintu"
+                    }
+                } pada ${data.createdAt.formatDateTime()} pukul ${data.createdAt.formatDateTime("HH:mm")}",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onBackground.copy(alpha = .72f)
+            )
         }
     }
 }

@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import id.my.smartdoorlock.core.UiState
 import id.my.smartdoorlock.core.extensions.toFailure
 import id.my.smartdoorlock.openapi.apis.ControlApi
+import id.my.smartdoorlock.openapi.models.GetAllLatestLogsResponse
 import id.my.smartdoorlock.openapi.models.TriggerBuzzerAlarmResponse
 import id.my.smartdoorlock.openapi.models.TriggerFingerprintModeRequest
 import id.my.smartdoorlock.openapi.models.TriggerFingerprintModeResponse
@@ -118,5 +119,28 @@ class HomeViewModel(
             delay(100)
             triggerRFIDModeState = UiState.Initial
         }
+    }
+
+    var getAllLatestLogsState by mutableStateOf<UiState<GetAllLatestLogsResponse>>(UiState.Initial)
+        private set
+
+    fun getAllLatestLogs() = viewModelScope.launch {
+        try {
+            getAllLatestLogsState = UiState.Loading
+            val body = controlApi.getAllLatestLogs().body()
+            getAllLatestLogsState = UiState.Success(body)
+        } catch (e: ResponseException) {
+            e.printStackTrace()
+            getAllLatestLogsState = UiState.Failure(
+                message = e.response.bodyAsText().toFailure().message
+            )
+        } catch (e: Exception) {
+            e.printStackTrace()
+            getAllLatestLogsState = UiState.Failure()
+        }
+    }
+
+    init {
+        getAllLatestLogs()
     }
 }
